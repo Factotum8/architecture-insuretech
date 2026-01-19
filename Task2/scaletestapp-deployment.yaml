@@ -1,0 +1,26 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: scaletestapp
+  labels:
+    app: scaletestapp
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: scaletestapp
+  template:
+    metadata:
+      labels:
+        app: scaletestapp
+    spec:
+      containers:
+        - name: scaletestapp
+#          image: ghcr.io/yandex-practicum/scaletestapp@sha256:eff20ae3ae2d596375f9ed6d612a78d149a35a66cd2907ea90d7175ca918c993 не работает для arm
+          image: ghcr.io/kotenev/scaletestapp:d92606d0e3c6e76d9d834b315383a233455175aa
+          imagePullPolicy: IfNotPresent
+          resources:
+            limits:
+              memory: "30Mi"
+            requests:
+              memory: "30Mi"
