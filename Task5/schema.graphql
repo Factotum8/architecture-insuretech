@@ -1,0 +1,52 @@
+"""
+Сервис управления клиентскими данными
+"""
+schema {
+  query: Query
+}
+
+scalar Date
+
+type Query {
+  """
+  client(id){...}
+  Эквивалент: GET /v1/clients/{id}
+  Возвращает информацию о клиенте по ID.
+  client(id){ documents {...} }
+  Эквивалент: GET /v1/clients/{id}/documents
+  client(id){ relatives {...} }
+  Эквивалент: GET /v1/clients/{id}/relatives
+  """
+  client(id: ID!): Client
+}
+
+type Client {
+  id: ID!
+  name: String
+  age: Int
+
+  """
+  Эквивалент: GET /v1/clients/{id}/documents
+  """
+  documents: [Document!]!
+
+  """
+  Эквивалент: GET /v1/clients/{id}/relatives
+  """
+  relatives: [Relative!]!
+}
+
+type Document {
+  id: ID!
+  type: String
+  number: String
+  issueDate: Date
+  expiryDate: Date
+}
+
+type Relative {
+  id: ID!
+  relationType: String
+  name: String
+  age: Int
+}
